@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Entrar{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+  <div class="w-full max-w-sm">
+    <h1 class="text-2xl font-bold text-center mb-6">📦 Inventario</h1>
+    <p class="text-center text-gray-600 mb-6">¿Quién eres?</p>
+
+    {% if error %}
+    <div class="bg-red-100 text-red-700 p-3 rounded-lg mb-4 text-center">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" action="/login" id="login-form">
+      <input type="hidden" name="user_id" id="selected-user" value="">
+
+      <div class="grid grid-cols-3 gap-3 mb-6">
+        {% for user in users %}
+        <button type="button"
+                onclick="selectUser({{ user.id }}, this)"
+                class="user-btn flex flex-col items-center p-4 bg-white rounded-xl border-2 border-gray-200 hover:border-blue-400 transition-colors">
+          <span class="text-4xl mb-1">{{ user.avatar_emoji }}</span>
+          <span class="text-sm font-medium">{{ user.name }}</span>
+        </button>
+        {% endfor %}
+      </div>
+
+      <div id="pin-section" class="hidden">
+        <label class="block text-sm font-medium text-gray-700 mb-2 text-center">PIN</label>
+        <input type="password" name="pin" inputmode="numeric" pattern="[0-9]*" maxlength="6"
+               class="w-full text-center text-2xl tracking-[0.5em] p-3 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none"
+               placeholder="••••" autofocus>
+        <button type="submit"
+                class="w-full mt-4 bg-blue-600 text-white py-3 rounded-xl text-lg font-semibold hover:bg-blue-700 active:bg-blue-800 transition-colors">
+          Entrar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+function selectUser(userId, btn) {
+  document.getElementById('selected-user').value = userId;
+  document.querySelectorAll('.user-btn').forEach(b => b.classList.replace('border-blue-500', 'border-gray-200'));
+  btn.classList.replace('border-gray-200', 'border-blue-500');
+  const pinSection = document.getElementById('pin-section');
+  pinSection.classList.remove('hidden');
+  pinSection.querySelector('input').focus();
+}
+</script>
+{% endblock %}

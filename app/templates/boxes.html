@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Cajas{% endblock %}
+
+{% block content %}
+<div class="p-4 max-w-lg mx-auto">
+  <div class="flex items-center justify-between mb-4">
+    <h1 class="text-xl font-bold">📦 Mis Cajas</h1>
+    <a href="/boxes/new"
+       class="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-700 active:bg-blue-800">
+      + Nueva
+    </a>
+  </div>
+
+  {% if not boxes %}
+  <div class="text-center py-16 text-gray-500">
+    <p class="text-6xl mb-4">📭</p>
+    <p class="mb-6 text-lg">No hay cajas todavía</p>
+    <a href="/boxes/new"
+       class="inline-block bg-blue-600 text-white px-8 py-4 rounded-2xl text-lg font-semibold hover:bg-blue-700 active:bg-blue-800">
+      + Crear la primera caja
+    </a>
+  </div>
+  {% endif %}
+
+  <div class="grid grid-cols-2 gap-3">
+    {% for box in boxes %}
+    <a href="/boxes/{{ box.id }}" class="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow active:bg-gray-50">
+      <div class="h-24 bg-gray-100 flex items-center justify-center overflow-hidden">
+        {% if thumbs.get(box.id) %}
+        <img src="/uploads/thumbs/{{ thumbs[box.id] }}" class="w-full h-full object-cover" alt="">
+        {% else %}
+        <span class="text-4xl">📦</span>
+        {% endif %}
+      </div>
+      <div class="p-3">
+        <div class="flex items-center gap-1.5 mb-1">
+          <span class="bg-gray-800 text-white text-xs font-bold px-1.5 py-0.5 rounded">{{ box.number }}</span>
+          <span class="text-sm font-medium truncate">{{ box.label }}</span>
+        </div>
+        <div class="flex items-center justify-between text-xs text-gray-500">
+          <span>{{ counts.get(box.id, 0) }} items</span>
+          {% if box.location %}<span>📍 {{ box.location }}</span>{% endif %}
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

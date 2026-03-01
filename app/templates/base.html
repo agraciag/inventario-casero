@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#1e40af">
+  <title>{% block title %}Inventario{% endblock %} | Inventario</title>
+  <link rel="stylesheet" href="/static/tailwind.css?v=2">
+  <script src="/static/htmx.min.js?v=2"></script>
+  <link rel="stylesheet" href="/static/style.css?v=2">
+</head>
+<body class="bg-gray-50 min-h-screen pb-20">
+  {% block content %}{% endblock %}
+
+  <!-- Bottom nav -->
+  {% if user is defined and user %}
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
+    <div class="max-w-lg mx-auto flex">
+      <a href="/items" class="flex-1 flex flex-col items-center py-2 text-gray-600 hover:text-blue-600 {{ 'text-blue-600' if request.url.path == '/items' else '' }}">
+        <span class="text-xl">🗂️</span>
+        <span class="text-xs">Items</span>
+      </a>
+      <a href="/boxes" class="flex-1 flex flex-col items-center py-2 text-gray-600 hover:text-blue-600 {{ 'text-blue-600' if request.url.path == '/boxes' else '' }}">
+        <span class="text-xl">📦</span>
+        <span class="text-xs">Cajas</span>
+      </a>
+      <a href="/organize" class="flex-1 flex flex-col items-center py-2 text-gray-600 hover:text-blue-600 {{ 'text-blue-600' if request.url.path == '/organize' else '' }}">
+        <span class="text-xl">🔀</span>
+        <span class="text-xs">Organizar</span>
+      </a>
+      <a href="/reports" class="flex-1 flex flex-col items-center py-2 text-gray-600 hover:text-blue-600 {{ 'text-blue-600' if request.url.path == '/reports' else '' }}">
+        <span class="text-xl">📊</span>
+        <span class="text-xs">Resumen</span>
+      </a>
+      <form method="post" action="/logout" class="flex-1">
+        <button type="submit" class="w-full flex flex-col items-center py-2 text-gray-600 hover:text-red-600">
+          <span class="text-xl">{{ user.avatar_emoji }}</span>
+          <span class="text-xs">Salir</span>
+        </button>
+      </form>
+    </div>
+  </nav>
+  {% endif %}
+</body>
+</html>

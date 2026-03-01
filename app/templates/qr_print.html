@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>QR - Caja {{ box.number }}</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 2rem; }
+    .qr-container { display: inline-block; border: 2px dashed #ccc; padding: 1.5rem; border-radius: 12px; }
+    .qr-container img { width: 200px; height: 200px; }
+    .box-number { font-size: 3rem; font-weight: bold; margin: 0.5rem 0; }
+    .box-label { font-size: 1.2rem; color: #555; }
+    .no-print { margin-top: 2rem; }
+    @media print { .no-print { display: none; } }
+  </style>
+</head>
+<body>
+  <div class="qr-container">
+    <img src="/boxes/{{ box.id }}/qr" alt="QR Code">
+    <div class="box-number">#{{ box.number }}</div>
+    <div class="box-label">{{ box.label }}</div>
+    {% if box.location %}
+    <div class="box-label">📍 {{ box.location }}</div>
+    {% endif %}
+  </div>
+  <div class="no-print">
+    <button onclick="window.print()" style="padding: 12px 24px; font-size: 1rem; cursor: pointer; background: #2563eb; color: white; border: none; border-radius: 8px;">
+      🖨️ Imprimir
+    </button>
+    <br><br>
+    <a href="/boxes/{{ box.id }}" style="color: #2563eb;">← Volver a la caja</a>
+  </div>
+</body>
+</html>

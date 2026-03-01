@@ -1,0 +1,61 @@
+/* Minimal custom styles */
+body {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth transitions */
+a, button {
+  transition: all 0.15s ease;
+}
+
+/* Hide scrollbar for cleaner mobile look */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Safe area padding for notched phones */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  nav.fixed {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Organize drag-and-drop feedback */
+.organize-ghost {
+  opacity: 0.4;
+  background: #dbeafe;
+  border: 2px dashed #3b82f6;
+  border-radius: 0.5rem;
+}
+
+.organize-chosen {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: scale(1.02);
+}
+
+.organize-drag {
+  opacity: 0.9;
+}
+
+.organize-box-content.collapsed {
+  display: none;
+}
+
+.organize-box {
+  -webkit-touch-callout: none;
+  touch-action: pan-y;
+}
+
+.organize-box-ghost {
+  opacity: 0.4;
+  border: 2px dashed #93c5fd;
+  border-radius: 0.75rem;
+}
+
+.organize-chevron {
+  transition: transform 0.2s ease;
+}
+
+.rotate-\[-90deg\] {
+  transform: rotate(-90deg);
+}

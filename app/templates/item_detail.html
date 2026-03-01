@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block content %}
+<div class="p-4 max-w-lg mx-auto">
+  <!-- Header -->
+  <div class="flex items-center gap-3 mb-4">
+    <a href="{% if item.box_id %}/boxes/{{ item.box_id }}{% else %}/items{% endif %}" class="text-2xl">←</a>
+    <h1 class="text-xl font-bold flex-1">{{ item.name }}</h1>
+    <a href="/items/{{ item.id }}/edit" class="text-2xl" title="Editar">✏️</a>
+  </div>
+
+  <!-- Photo -->
+  {% if item.photo_path %}
+  <div class="mb-4 rounded-xl overflow-hidden">
+    <img src="/uploads/photos/{{ item.photo_path }}" class="w-full" alt="{{ item.name }}">
+  </div>
+  {% endif %}
+
+  <!-- Info -->
+  <div class="bg-white rounded-xl border border-gray-200 p-4 space-y-3 mb-4">
+    {% if item.description %}
+    <div>
+      <p class="text-sm text-gray-500">Descripción</p>
+      <p>{{ item.description }}</p>
+    </div>
+    {% endif %}
+
+    <div>
+      <p class="text-sm text-gray-500">Prioridad</p>
+      {% set priority_colors = {
+        'prioritario': 'bg-green-100 text-green-800',
+        'no_prioritario': 'bg-blue-100 text-blue-800',
+        'quizas': 'bg-yellow-100 text-yellow-800',
+        'no_vale_la_pena': 'bg-orange-100 text-orange-800',
+        'tirar_regalar_vender': 'bg-red-100 text-red-800'
+      } %}
+      {% set priority_labels = {
+        'prioritario': '🟢 Prioritario',
+        'no_prioritario': '🔵 No prioritario',
+        'quizas': '🟡 Quizás algún día',
+        'no_vale_la_pena': '🟠 No vale la pena',
+        'tirar_regalar_vender': '🔴 Tirar/regalar/vender'
+      } %}
+      <span class="inline-block px-3 py-1 rounded-full text-sm font-medium {{ priority_colors.get(item.priority, '') }}">
+        {{ priority_labels.get(item.priority, item.priority) }}
+      </span>
+    </div>
+
+    {% if item.weight_kg %}
+    <div>
+      <p class="text-sm text-gray-500">Peso</p>
+      <p>⚖️ {{ item.weight_kg }} kg</p>
+    </div>
+    {% endif %}
+
+    {% if item.estimated_value %}
+    <div>
+      <p class="text-sm text-gray-500">Valor estimado</p>
+      <p>💰 ${{ item.estimated_value|int }}</p>
+    </div>
+    {% endif %}
+
+    <div>
+      <p class="text-sm text-gray-500">En caja</p>
+      {% if item.box %}
+      <a href="/boxes/{{ item.box.id }}" class="text-blue-600 font-medium">
+        📦 #{{ item.box.number }} - {{ item.box.label }}
+      </a>
+      {% else %}
+      <span class="text-gray-500">Sin caja asignada</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Move to another box -->
+  <div class="bg-white rounded-xl border border-gray-200 p-4 mb-4">
+    <p class="text-sm font-medium text-gray-700 mb-2">Mover a otra caja</p>
+    <form method="post" action="/items/{{ item.id }}/move" class="flex gap-2">
+      <select name="box_id" class="flex-1 p-2 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none">
+        <option value="" {% if not item.box_id %}selected{% endif %}>Sin caja</option>
+        {% for box in boxes %}
+        <option value="{{ box.id }}" {% if box.id == item.box_id %}selected{% endif %}>
+          #{{ box.number }} - {{ box.label }}
+        </option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="bg-gray-200 px-4 py-2 rounded-xl font-medium hover:bg-gray-300 active:bg-gray-400">
+        Mover
+      </button>
+    </form>
+  </div>
+
+  <!-- Delete -->
+  <form method="post" action="/items/{{ item.id }}/delete"
+        onsubmit="return confirm('¿Eliminar este item?')">
+    <button type="submit" class="w-full text-red-600 py-2 text-sm font-medium">
+      🗑️ Eliminar item
+    </button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Resumen{% endblock %}
+
+{% block content %}
+<div class="p-4 max-w-lg mx-auto">
+  <h1 class="text-xl font-bold mb-4">📊 Resumen</h1>
+
+  <!-- Overview cards -->
+  <div class="grid grid-cols-2 gap-3 mb-6">
+    <div class="bg-white rounded-xl border border-gray-200 p-4 text-center">
+      <p class="text-3xl font-bold">{{ total_boxes }}</p>
+      <p class="text-sm text-gray-500">📦 Cajas</p>
+    </div>
+    <div class="bg-white rounded-xl border border-gray-200 p-4 text-center">
+      <p class="text-3xl font-bold">{{ total_items }}</p>
+      <p class="text-sm text-gray-500">🏷️ Items</p>
+    </div>
+  </div>
+
+  <!-- Priority breakdown -->
+  <h2 class="text-lg font-semibold mb-3">Por prioridad</h2>
+  <div class="space-y-2 mb-6">
+    {% set bg_colors = {
+      'green': 'bg-green-50 border-green-200',
+      'blue': 'bg-blue-50 border-blue-200',
+      'yellow': 'bg-yellow-50 border-yellow-200',
+      'orange': 'bg-orange-50 border-orange-200',
+      'red': 'bg-red-50 border-red-200'
+    } %}
+    {% for stat in priority_stats %}
+    <div class="rounded-xl border p-3 {{ bg_colors.get(stat.color, '') }}">
+      <div class="flex items-center justify-between">
+        <span class="font-medium">{{ stat.label }}</span>
+        <span class="text-lg font-bold">{{ stat.count }}</span>
+      </div>
+      {% if stat.weight > 0 or stat.value > 0 %}
+      <div class="flex gap-4 text-sm text-gray-600 mt-1">
+        {% if stat.weight > 0 %}<span>⚖️ {{ stat.weight }} kg</span>{% endif %}
+        {% if stat.value > 0 %}<span>💰 ${{ stat.value }}</span>{% endif %}
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Priority shipping summary -->
+  {% if priority_weight > 0 or priority_value > 0 %}
+  <div class="bg-green-100 rounded-xl border-2 border-green-300 p-4">
+    <h2 class="text-lg font-semibold text-green-800 mb-2">🟢 Envío Prioritario</h2>
+    <div class="grid grid-cols-2 gap-3">
+      <div>
+        <p class="text-2xl font-bold text-green-800">{{ priority_weight }} kg</p>
+        <p class="text-sm text-green-700">Peso total</p>
+      </div>
+      <div>
+        <p class="text-2xl font-bold text-green-800">${{ priority_value }}</p>
+        <p class="text-sm text-green-700">Valor total</p>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
