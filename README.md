@@ -2,6 +2,10 @@
 
 App casera para organizar cajas e items cuando te mudas. Hecha para usarse desde el celular.
 
+Añado esta línea, solo para comentar que este ha sido un proyecto "vibe code" hecho desde el teléfono y con el enfoque de "hacer la maleta".
+Sólo cuesta un par de horas de prestar atención y afinar tus preferencias y afinidades, pero si te sirve para ahorrarte unos cuantos tokens, 
+adelante, úsalo a tu conveniencia y construye desde él, estaré encantado de ver si alguien lo usa y para qué.
+
 ## Capturas de pantalla
 
 <p align="center">
