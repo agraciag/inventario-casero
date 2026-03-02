@@ -4,7 +4,11 @@ App casera para organizar cajas e items cuando te mudas. Hecha para usarse desde
 
 ## Capturas de pantalla
 
-<!-- TODO: agregar capturas -->
+<p align="center">
+  <img src="screenshots/items-sueltos.png" alt="Vista de items sueltos" width="300">
+  &nbsp;&nbsp;
+  <img src="screenshots/resumen.png" alt="Vista de resumen" width="300">
+</p>
 
 ## Que hace
 
