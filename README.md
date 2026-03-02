@@ -11,6 +11,8 @@ adelante, úsalo a tu conveniencia y construye desde él, estaré encantado de v
 <p align="center">
   <img src="screenshots/items-sueltos.png" alt="Vista de items sueltos" width="300">
   &nbsp;&nbsp;
+  <img src="screenshots/nuevo-item.png" alt="Formulario de nuevo item" width="300">
+  &nbsp;&nbsp;
   <img src="screenshots/resumen.png" alt="Vista de resumen" width="300">
 </p>
 
